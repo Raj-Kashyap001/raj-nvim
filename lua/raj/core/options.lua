@@ -33,7 +33,7 @@ opt.signcolumn = "no" -- toggle it to yes for left side margin space
 opt.backspace = "indent,eol,start"
 
 -- clipboard
-opt.clipboard:append("unnamedplus") -- use system clipboard as main register
+-- opt.clipboard:append("unnamedplus") -- use system clipboard as main register
 
 -- split window
 opt.splitright = true

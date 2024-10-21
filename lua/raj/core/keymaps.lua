@@ -31,3 +31,14 @@ keymap.set("n", "<C-s>", "<cmd>w<CR>", { desc = "Save on ctrl + s"} )
 -- nvimtree
 keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle Tree File Explorer"} )
 keymap.set("n", "<leader>br", "<cmd>NvimTreeRefresh<CR>", { desc = "Refreshh Tree File Explorer"} )
+
+
+-- telescope nvim
+-- keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+--keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+--keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+--keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = 'Find files' })
+keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = 'Live grep' })
+keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<CR>', { desc = 'Find buffers' })
+keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = 'Help tags' })
