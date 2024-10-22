@@ -18,6 +18,10 @@ opt.autoindent = true
 opt.wrap = false
 
 
+-- mouse tweak
+opt.mouse = 'a'  -- Enable mouse support for all modes
+
+
 -- searching
 opt.ignorecase = true
 opt.smartcase = true

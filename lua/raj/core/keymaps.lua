@@ -5,8 +5,8 @@ local keymap = vim.keymap -- for consiseness
  -- keymap.set("i", "jk", "<ESC>", { desc = "Exit Insert mode with jk" })
  keymap.set("n", "<leader>ch", "<cmd>nohl<CR>", { desc = "Clear search highlights with space + c,h" })
 
--- open exlore
--- keymap.set("n", "<leader>e","<cmd>Explore<CR>", { desc = "Open Explorer" })
+ -- open exlore
+ -- keymap.set("n", "<leader>e","<cmd>Explore<CR>", { desc = "Open Explorer" })
 
 
 -- window managment keymaps
@@ -34,11 +34,34 @@ keymap.set("n", "<leader>br", "<cmd>NvimTreeRefresh<CR>", { desc = "Refreshh Tre
 
 
 -- telescope nvim
--- keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
---keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
---keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
---keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = 'Find files' })
 keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = 'Live grep' })
 keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<CR>', { desc = 'Find buffers' })
 keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = 'Help tags' })
+
+-- linewrap 
+keymap.set('n', '<leader>z', ':set wrap!<CR>', { desc = 'Toggle line wrapping', noremap = true, silent = true }) 
+
+-- Map Alt + Left to scroll left
+keymap.set('n', '<A-Left>', '3zh', { desc = 'Scroll left', noremap = true, silent = true })
+
+-- Map Alt + Right to scroll right
+keymap.set('n', '<A-Right>', '3zl', { desc = 'Scroll right', noremap = true, silent = true })
+
+-- Move the current line down with Alt + Down in normal mode
+keymap.set('n', '<A-Down>', ':m .+1<CR>==', { desc = 'Move line down', noremap = true, silent = true })
+
+-- Move the current line up with Alt + Up in normal mode
+keymap.set('n', '<A-Up>', ':m .-2<CR>==', { desc = 'Move line up', noremap = true, silent = true })
+
+-- Move selected lines down with Alt + Down in visual mode
+keymap.set('v', '<A-Down>', ':m \'>+1<CR>gv=gv', { desc = 'Move selected lines down', noremap = true, silent = true })
+
+-- Move selected lines up with Alt + Up in visual mode
+keymap.set('v', '<A-Up>', ':m \'<-2<CR>gv=gv', { desc = 'Move selected lines up', noremap = true, silent = true })
+
+-- Move selected lines down with Alt + Down in visual block mode
+keymap.set('x', '<A-Down>', ':m \'>+1<CR>gv=gv', { desc = 'Move selected block down', noremap = true, silent = true })
+
+-- Move selected lines up with Alt + Up in visual block mode
+keymap.set('x', '<A-Up>', ':m \'<-2<CR>gv=gv', { desc = 'Move selected block up', noremap = true, silent = true })
