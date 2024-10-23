@@ -24,8 +24,10 @@ keymap.set("n", "<C-d>", "<cmd>tabnew %<CR>", { desc = "Open current file in new
 
 
 -- File Operaitons
-keymap.set("i", "<C-s>", "<ESC>:w<CR>", { desc = "Save on ctrl + s"} )
+-- keymap.set("i", "<C-s>", "<ESC>:w<CR>", { desc = "Save on ctrl + s"} )
 keymap.set("n", "<C-s>", "<cmd>w<CR>", { desc = "Save on ctrl + s"} )
+keymap.set("n", "<leader>q", "<cmd>qa!<CR>", { desc = "Force Quit All"} )
+
 
 
 -- nvimtree
@@ -65,3 +67,7 @@ keymap.set('x', '<A-Down>', ':m \'>+1<CR>gv=gv', { desc = 'Move selected block d
 
 -- Move selected lines up with Alt + Up in visual block mode
 keymap.set('x', '<A-Up>', ':m \'<-2<CR>gv=gv', { desc = 'Move selected block up', noremap = true, silent = true })
+
+-- Restore Session
+keymap.set('n', '<leader>sr', '<cmd>SessionRestore<CR>', { desc = 'Restore Session', noremap = true, silent = true })
+keymap.set('n', '<leader>ss', '<cmd>SessionSave<CR>', { desc = 'Save Session', noremap = true, silent = true })

@@ -2,6 +2,8 @@ vim.cmd("let g:netrw_liststyle = 3")
 
 local opt = vim.opt
 
+-- hide default status bars mode indicator
+opt.showmode = false
 
 -- generic settings
 opt.relativenumber = true
@@ -27,7 +29,6 @@ opt.ignorecase = true
 opt.smartcase = true
 
 
-
 -- apearence options
 opt.termguicolors = true
 opt.background = "dark"
@@ -37,7 +38,7 @@ opt.signcolumn = "no" -- toggle it to yes for left side margin space
 opt.backspace = "indent,eol,start"
 
 -- clipboard
--- opt.clipboard:append("unnamedplus") -- use system clipboard as main register
+opt.clipboard:append("unnamedplus") -- use system clipboard as main register
 
 -- split window
 opt.splitright = true
