@@ -2,11 +2,12 @@
 vim.g.mapleader = " "
 
 local keymap = vim.keymap -- for consiseness
- -- keymap.set("i", "jk", "<ESC>", { desc = "Exit Insert mode with jk" })
- keymap.set("n", "<leader>ch", "<cmd>nohl<CR>", { desc = "Clear search highlights with space + c,h" })
 
- -- open exlore
- -- keymap.set("n", "<leader>e","<cmd>Explore<CR>", { desc = "Open Explorer" })
+-- keymap.set("i", "jk", "<ESC>", { desc = "Exit Insert mode with jk" })
+keymap.set("n", "<leader>ch", "<cmd>nohl<CR>", { desc = "Clear search highlights with space + c,h" })
+
+-- open exlore
+-- keymap.set("n", "<leader>e","<cmd>Explore<CR>", { desc = "Open Explorer" })
 
 
 -- window managment keymaps
@@ -71,3 +72,8 @@ keymap.set('x', '<A-Up>', ':m \'<-2<CR>gv=gv', { desc = 'Move selected block up'
 -- Restore Session
 keymap.set('n', '<leader>sr', '<cmd>SessionRestore<CR>', { desc = 'Restore Session', noremap = true, silent = true })
 keymap.set('n', '<leader>ss', '<cmd>SessionSave<CR>', { desc = 'Save Session', noremap = true, silent = true })
+
+
+-- Code Runner 
+
+keymap.set('n', '<F7>', '<cmd>RunCode<CR>', { desc = 'Run Code ', noremap = true, silent = true })
