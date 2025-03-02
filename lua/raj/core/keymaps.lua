@@ -70,3 +70,8 @@ keymap.set('x', '<A-Up>', ':m \'<-2<CR>gv=gv', { desc = 'Move selected block up'
 -- Restore Session
 keymap.set('n', '<leader>sr', '<cmd>SessionRestore<CR>', { desc = 'Restore Session', noremap = true, silent = true })
 keymap.set('n', '<leader>ss', '<cmd>SessionSave<CR>', { desc = 'Save Session', noremap = true, silent = true })
+
+
+-- Code Runner 
+
+keymap.set('n', '<F7>', '<cmd>RunCode<CR>', { desc = 'Run Code ', noremap = true, silent = true })
