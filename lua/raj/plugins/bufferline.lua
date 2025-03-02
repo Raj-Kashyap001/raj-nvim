@@ -3,17 +3,18 @@ return {
   config = function()
     local bufferline = require("bufferline")
     bufferline.setup{
-
       -- style_preset = bufferline. -- or bufferline.style_preset.minimal,
       options = {
+          bufferline.style_preset.no_italic,
           mode = "tabs",
-          seperator_style = "slanted",
-           style_preset = {
-                bufferline.style_preset.no_italic,
-            },
-      
-      },
-    }
+          offsets = {
+              filetype = "NvimTree",
+              text = "Explorer",
+              highlight = "Directory",
+              separator = true -- use a "true" to enable the default, or set your own character
+          },
+      }
+      }
   end
 
 }

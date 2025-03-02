@@ -2,11 +2,12 @@
 vim.g.mapleader = " "
 
 local keymap = vim.keymap -- for consiseness
- -- keymap.set("i", "jk", "<ESC>", { desc = "Exit Insert mode with jk" })
- keymap.set("n", "<leader>ch", "<cmd>nohl<CR>", { desc = "Clear search highlights with space + c,h" })
 
- -- open exlore
- -- keymap.set("n", "<leader>e","<cmd>Explore<CR>", { desc = "Open Explorer" })
+-- keymap.set("i", "jk", "<ESC>", { desc = "Exit Insert mode with jk" })
+keymap.set("n", "<leader>ch", "<cmd>nohl<CR>", { desc = "Clear search highlights with space + c,h" })
+
+-- open exlore
+-- keymap.set("n", "<leader>e","<cmd>Explore<CR>", { desc = "Open Explorer" })
 
 
 -- window managment keymaps
@@ -19,14 +20,13 @@ keymap.set("n", "<leader>sq", "<cmd>close<CR>", {desc = "Close Splited window"})
 keymap.set("n", "<M-l>", "<cmd>tabnext<CR>", { desc = "Switch to next tab" })
 keymap.set("n", "<M-h>", "<cmd>tabprevious<CR>", { desc = "Switch to previous tab" })
 keymap.set("n", "<leader>q", "<cmd>tabclose<CR>", { desc = "Close current tab" })
-keymap.set("n", "<C-n>", "<cmd>tabnew<CR>", { desc = "Open new tab" })
-keymap.set("n", "<C-d>", "<cmd>tabnew %<CR>", { desc = "Open current file in new tab" })
+-- keymap.set("n", "<C-d>", "<cmd>tabnew %<CR>", { desc = "Open current file in new tab" })
 
 
 -- File Operaitons
 -- keymap.set("i", "<C-s>", "<ESC>:w<CR>", { desc = "Save on ctrl + s"} )
 keymap.set("n", "<C-s>", "<cmd>w<CR>", { desc = "Save on ctrl + s"} )
-keymap.set("n", "<leader>q", "<cmd>qa!<CR>", { desc = "Force Quit All"} )
+keymap.set("n", "<leader>q", "<cmd>q!<CR>", { desc = "Force Quit"} )
 
 
 
@@ -60,7 +60,6 @@ keymap.set('n', '<A-Up>', ':m .-2<CR>==', { desc = 'Move line up', noremap = tru
 keymap.set('v', '<A-Down>', ':m \'>+1<CR>gv=gv', { desc = 'Move selected lines down', noremap = true, silent = true })
 
 -- Move selected lines up with Alt + Up in visual mode
-keymap.set('v', '<A-Up>', ':m \'<-2<CR>gv=gv', { desc = 'Move selected lines up', noremap = true, silent = true })
 
 -- Move selected lines down with Alt + Down in visual block mode
 keymap.set('x', '<A-Down>', ':m \'>+1<CR>gv=gv', { desc = 'Move selected block down', noremap = true, silent = true })

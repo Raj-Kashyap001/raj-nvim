@@ -4,5 +4,9 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     ---@module "ibl"
     ---@type ibl.config
-    opts = {},
+    opts = {
+        scope = {
+            enabled = false,
+        },
+    },
 }
