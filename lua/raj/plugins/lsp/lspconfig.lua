@@ -85,11 +85,19 @@ return {
           capabilities = capabilities,
         })
       end,
-     ["emmet_ls"] = function()
-        -- configure emmet language server
-        lspconfig["emmet_ls"].setup({
+     ["bashls"] = function()
+        lspconfig["bashls"].setup({
           capabilities = capabilities,
-          filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+        })
+      end,
+      ["pyright"] = function()
+        lspconfig["pyright"].setup({
+          capabilities = capabilities,
+        })
+      end,
+      ["clangd"] = function()
+        lspconfig["clangd"].setup({
+          capabilities = capabilities,
         })
       end,
       ["lua_ls"] = function()

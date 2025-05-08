@@ -7,7 +7,7 @@ return {
                 dotfiles = true,
             },
             view = {
-            side = "right",
+            side = "left",
       },
         })
     end,
