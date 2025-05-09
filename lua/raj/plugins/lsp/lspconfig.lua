@@ -100,9 +100,9 @@ return {
           capabilities = capabilities,
         })
       end,
-      ["emmylua_ls"] = function()
+      ["lua_ls"] = function()
         -- configure lua server (with special settings)
-        lspconfig["emmylua_ls"].setup({
+        lspconfig["lua_ls"].setup({
           capabilities = capabilities,
           settings = {
             Lua = {
