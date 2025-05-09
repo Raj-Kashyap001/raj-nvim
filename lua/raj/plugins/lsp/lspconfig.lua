@@ -90,6 +90,11 @@ return {
           capabilities = capabilities,
         })
       end,
+     ["alex"] = function()
+        lspconfig["alex"].setup({
+          capabilities = capabilities,
+        })
+      end,
       ["pyright"] = function()
         lspconfig["pyright"].setup({
           capabilities = capabilities,
