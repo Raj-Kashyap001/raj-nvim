@@ -90,11 +90,6 @@ return {
           capabilities = capabilities,
         })
       end,
-     ["alex"] = function()
-        lspconfig["alex"].setup({
-          capabilities = capabilities,
-        })
-      end,
       ["pyright"] = function()
         lspconfig["pyright"].setup({
           capabilities = capabilities,
@@ -105,9 +100,9 @@ return {
           capabilities = capabilities,
         })
       end,
-      ["lua_ls"] = function()
+      ["emmylua_ls"] = function()
         -- configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
+        lspconfig["emmylua_ls"].setup({
           capabilities = capabilities,
           settings = {
             Lua = {
