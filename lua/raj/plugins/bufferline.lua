@@ -1,20 +1,33 @@
 return {
-  'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons',
+  "akinsho/bufferline.nvim",
+  version = "*",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  event = "BufAdd",
   config = function()
-    local bufferline = require("bufferline")
-    bufferline.setup{
-      -- style_preset = bufferline. -- or bufferline.style_preset.minimal,
+    require("bufferline").setup({
       options = {
-          bufferline.style_preset.no_italic,
-          mode = "tabs",
-          offsets = {
-              filetype = "NvimTree",
-              text = "Explorer",
-              highlight = "Directory",
-              separator = true -- use a "true" to enable the default, or set your own character
+        mode = "buffers", -- show buffers, not tabs
+        numbers = "ordinal",
+        diagnostics = "nvim_lsp",
+        separator_style = { "", "" },
+        show_close_icon = true,
+        show_buffer_close_icons = false,
+        always_show_bufferline = true,
+        offsets = {
+          {
+            filetype = "NvimTree",
+            text = "File Explorer",
+            highlight = "Directory",
+            text_align = "left",
           },
-      }
-      }
-  end
+        },
+      },
+    })
 
+    -- Optional keymaps for navigation
+    local keymap = vim.keymap.set
+    keymap("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next Buffer" })
+    keymap("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev Buffer" })
+    keymap("n", "<leader>bd", "<Cmd>bd<CR>", { desc = "Close Buffer" })
+  end,
 }

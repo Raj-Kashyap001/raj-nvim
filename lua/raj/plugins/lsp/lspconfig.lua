@@ -1,11 +1,11 @@
-return { 
+return {
   -- LSP Config
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
-    { "folke/neodev.nvim", opts = {} },
+    { "folke/neodev.nvim",                   opts = {} },
   },
   config = function()
     local lspconfig = require("lspconfig")
@@ -46,11 +46,11 @@ return {
         opts.desc = "Line diagnostics"
         keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 
-        opts.desc = "Prev diagnostic"
-        keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-
-        opts.desc = "Next diagnostic"
-        keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+        -- opts.desc = "Prev diagnostic"
+        -- keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+        --
+        -- opts.desc = "Next diagnostic"
+        -- keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
         opts.desc = "Hover"
         keymap.set("n", "K", vim.lsp.buf.hover, opts)
@@ -96,6 +96,12 @@ return {
         })
       end,
 
+      ["ts_ls"] = function()
+        lspconfig.ts_ls.setup({
+          capabilities = capabilities,
+        })
+      end,
+
       ["clangd"] = function()
         lspconfig.clangd.setup({
           capabilities = capabilities,
@@ -128,5 +134,3 @@ return {
     })
   end,
 }
-
-
