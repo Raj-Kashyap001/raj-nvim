@@ -6,12 +6,12 @@ return {
 
     conform.setup({
       formatters_by_ft = {
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
-        css = { "prettier" },
-        html = { "prettier" },
+        javascript = { "biome" },
+        typescript = { "biome" },
+        javascriptreact = { "biome" },
+        typescriptreact = { "biome" },
+        css = { "biome" },
+        html = { "biome" },
         json = { "prettier" },
         yaml = { "prettier" },
         markdown = { "prettier" },

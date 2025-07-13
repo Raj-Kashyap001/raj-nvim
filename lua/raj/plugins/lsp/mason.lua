@@ -35,8 +35,9 @@ return {
 
     mason_tool_installer.setup({
       ensure_installed = {
+        "biome",
         "prettier", -- prettier formatter
-        "black", -- python formatter
+        "black",    -- python formatter
         "pylint",
       },
     })
