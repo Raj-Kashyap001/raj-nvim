@@ -108,12 +108,6 @@ return {
         })
       end,
 
-      ["bashls"] = function()
-        lspconfig.bashls.setup({
-          capabilities = capabilities,
-        })
-      end,
-
       ["html"] = function()
         lspconfig.html.setup({
           capabilities = capabilities,
