@@ -1,10 +1,55 @@
 -- ============================================================================
--- NEOVIM 0.12.0 OPTIMIZED CONFIGURATION
+-- NEOVIM 0.12.0 WINDOWS/POWERSHELL OPTIMIZED CONFIGURATION
 -- ============================================================================
 
 -- Global Settings
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+-- Windows-specific optimizations
+if vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1 then
+    -- Use PowerShell as default shell for better Windows integration
+    vim.opt.shell = 'pwsh.exe'
+    vim.opt.shellcmdflag =
+    '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[\'Out-File:Encoding\']=\'utf8\';Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
+    vim.opt.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+    vim.opt.shellpipe = '2>&1 | %%{ "$_" } | Tee-Object %s; exit $LastExitCode'
+    vim.opt.shellquote = ''
+    vim.opt.shellxquote = ''
+
+    -- Windows clipboard optimization
+    vim.g.clipboard = {
+        name = 'win32yank',
+        copy = {
+            ['+'] = 'win32yank.exe -i --crlf',
+            ['*'] = 'win32yank.exe -i --crlf',
+        },
+        paste = {
+            ['+'] = 'win32yank.exe -o --lf',
+            ['*'] = 'win32yank.exe -o --lf',
+        },
+        cache_enabled = true,
+    }
+
+    -- Windows file path optimization
+    vim.opt.isfname:append("@-@") -- Allow @ in filenames (common in Windows)
+    vim.opt.path:append("**")     -- Recursive search in subdirectories
+
+    -- Windows performance tweaks
+    vim.opt.fileformats = "dos,unix" -- Prefer Windows line endings
+    vim.opt.encoding = "utf-8"
+    vim.opt.fileencoding = "utf-8"
+
+    -- Disable Windows Defender real-time scanning interference
+    vim.opt.directory = vim.fn.expand("~/AppData/Local/nvim-swap//")
+    vim.opt.backupdir = vim.fn.expand("~/AppData/Local/nvim-backup//")
+    vim.opt.undodir = vim.fn.expand("~/AppData/Local/nvim-undo//")
+
+    -- Create directories if they don't exist
+    vim.fn.mkdir(vim.fn.expand("~/AppData/Local/nvim-swap"), "p")
+    vim.fn.mkdir(vim.fn.expand("~/AppData/Local/nvim-backup"), "p")
+    vim.fn.mkdir(vim.fn.expand("~/AppData/Local/nvim-undo"), "p")
+end
 
 -- Performance optimizations
 vim.loader.enable()    -- Enable bytecode cache
@@ -182,6 +227,30 @@ keymap('v', '>', '>gv', opts)
 keymap('v', 'J', ":m '>+1<CR>gv=gv", opts) -- Move text up
 keymap('v', 'K', ":m '<-2<CR>gv=gv", opts) -- Move text down
 
+-- Windows PowerShell keymaps
+if vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1 then
+    -- PowerShell-specific shortcuts
+    keymap('n', '<leader>ps', ':!powershell -Command "Start-Process -FilePath %:p"<CR>',
+        { desc = "Open file with default app" })
+    keymap('n', '<leader>pf', ':!powershell -Command "explorer /select,%:p"<CR>', { desc = "Show file in Explorer" })
+    keymap('n', '<leader>pd', ':!powershell -Command "explorer %:p:h"<CR>', { desc = "Open directory in Explorer" })
+    keymap('n', '<leader>pt', ':!powershell -Command "wt -d %:p:h"<CR>', { desc = "Open Windows Terminal here" })
+    keymap('n', '<leader>pc', ':!powershell -Command "code %:p:h"<CR>', { desc = "Open VS Code here" })
+
+    -- Windows system shortcuts
+    keymap('n', '<leader>wr', ':!powershell -Command "Restart-Computer -Confirm"<CR>', { desc = "Restart Windows" })
+    keymap('n', '<leader>ws', ':!powershell -Command "Stop-Computer -Confirm"<CR>', { desc = "Shutdown Windows" })
+    keymap('n', '<leader>wl', ':!powershell -Command "rundll32.exe user32.dll,LockWorkStation"<CR>',
+        { desc = "Lock Windows" })
+
+    -- Network and system info
+    keymap('n', '<leader>wi',
+        ':!powershell -Command "Get-ComputerInfo | Select-Object WindowsProductName,WindowsVersion,TotalPhysicalMemory"<CR>',
+        { desc = "System info" })
+    keymap('n', '<leader>wn', ':!powershell -Command "Get-NetAdapter | Where-Object Status -eq Up"<CR>',
+        { desc = "Network adapters" })
+end
+
 -- LSP Keymaps (cleaner approach - avoiding gr conflicts)
 local function setup_lsp_keymaps(client, bufnr)
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -292,7 +361,7 @@ require('nvim-tree').setup({
     },
 })
 
--- ToggleTerm setup
+-- ToggleTerm setup with Windows optimizations
 require('toggleterm').setup({
     size = function(term)
         if term.direction == "horizontal" then
@@ -312,7 +381,8 @@ require('toggleterm').setup({
     persist_size = true,
     direction = 'horizontal',
     close_on_exit = true,
-    shell = vim.o.shell,
+    -- Windows-specific shell configuration
+    shell = vim.fn.has('win32') == 1 and 'wt.exe' or vim.o.shell,
     float_opts = {
         border = 'rounded',
         width = function()
@@ -323,6 +393,13 @@ require('toggleterm').setup({
         end,
         winblend = 3,
     },
+    -- Windows Terminal integration
+    on_create = function(term)
+        if vim.fn.has('win32') == 1 then
+            -- Set Windows Terminal color scheme
+            vim.cmd('startinsert!')
+        end
+    end,
 })
 
 -- Autopairs setup
