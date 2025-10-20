@@ -73,6 +73,7 @@ opt.synmaxcol = 300 -- Limit syntax highlighting for long lines
 vim.pack.add({
     -- Theme & UI
     { src = "https://github.com/catppuccin/nvim" },
+    { src = "https://github.com/neanias/everforest-nvim" },
     { src = "https://github.com/nvim-lualine/lualine.nvim" },
     { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/echasnovski/mini.icons" },
@@ -105,7 +106,6 @@ vim.pack.add({
 
     -- Additional utilities
     { src = "https://github.com/kylechui/nvim-surround" },
-    { src = "https://github.com/folke/which-key.nvim" },
     { src = "https://github.com/lewis6991/gitsigns.nvim" },
 })
 
@@ -121,6 +121,7 @@ keymap('n', '<leader>ch', ':nohl<CR>', opts)
 keymap('n', '<C-s>', ':w<CR>', opts)
 keymap('i', '<C-s>', '<Esc>:w<CR>a', opts)
 keymap('v', '<C-s>', '<Esc>:w<CR>gv', opts)
+
 
 -- VS Code like shortcuts
 keymap('n', '<C-a>', 'ggVG', opts)  -- Select all
@@ -366,21 +367,6 @@ require('nvim-surround').setup({
     },
 })
 
--- Which-key setup (updated for new API)
-require('which-key').setup({
-    win = {
-        border = "rounded",
-        position = "bottom",
-        margin = { 1, 0, 1, 0 },
-        padding = { 2, 2, 2, 2 },
-    },
-    layout = {
-        height = { min = 4, max = 25 },
-        width = { min = 20, max = 50 },
-        spacing = 3,
-        align = "left",
-    },
-})
 
 -- Gitsigns setup
 require('gitsigns').setup({
@@ -396,7 +382,7 @@ require('gitsigns').setup({
 -- Lualine setup
 require('lualine').setup({
     options = {
-        theme = 'catppuccin',
+        -- theme = 'catppuccin',
         component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         globalstatus = true,
@@ -445,7 +431,7 @@ require('nvim-treesitter.configs').setup({
         keymaps = {
             init_selection = "gnn",
             node_incremental = "grn",
-            scope_incremental = "grc",
+            scope_incremental = "gsc",
             node_decremental = "grm",
         },
     },
@@ -608,7 +594,6 @@ require("catppuccin").setup({
         gitsigns = true,
         nvimtree = true,
         treesitter = true,
-        which_key = true,
         mini = {
             enabled = true,
             indentscope_color = "",
@@ -617,6 +602,7 @@ require("catppuccin").setup({
 })
 
 vim.cmd('colorscheme catppuccin-mocha')
+vim.cmd('colorscheme everforest')
 
 -- ============================================================================
 -- ADDITIONAL OPTIMIZATIONS
