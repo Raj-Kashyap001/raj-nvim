@@ -210,15 +210,20 @@ end
 -- AUTOCOMMANDS
 -- ============================================================================
 
--- Format on save using LSP
+-- Remove the old BufWritePre autocommand and replace with:
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     callback = function()
-        if vim.lsp.get_clients({ bufnr = 0 })[1] then
+        -- Use conform for formatting if available
+        local conform_ok, conform = pcall(require, 'conform')
+        if conform_ok then
+            conform.format({ timeout_ms = 500, lsp_fallback = true })
+        elseif vim.lsp.get_clients({ bufnr = 0 })[1] then
             vim.lsp.buf.format({ async = false })
         end
     end,
 })
+
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -526,43 +531,74 @@ cmp.setup.cmdline(':', {
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
--- LSP capabilities
+-- ========================
+-- Modern Neovim LSP Setup
+-- (for Neovim ≥ 0.12)
+-- ========================
+
+-- Capabilities (completion support)
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- LSP Configuration
-vim.lsp.enable({ "lua_ls", "clangd", "biome", "pyright" })
+-- Shared configuration for all LSP servers
+vim.lsp.config('*', {
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    local opts = { buffer = bufnr, silent = true, noremap = true }
 
--- Lua LSP
-vim.lsp.config("lua_ls", {
-    capabilities = capabilities,
-    on_attach = setup_lsp_keymaps,
-    settings = {
-        Lua = {
-            runtime = {
-                version = 'LuaJIT',
-            },
-            diagnostics = {
-                globals = { 'vim' },
-            },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-                checkThirdParty = false,
-            },
-            telemetry = {
-                enable = false,
-            },
-        }
-    }
+    -- Common LSP keymaps
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+
+    -- Autoformat on save if supported
+    if client:supports_method('textDocument/formatting') then
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        group = vim.api.nvim_create_augroup('LspFormat.' .. bufnr, { clear = true }),
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr })
+        end,
+      })
+    end
+  end,
 })
 
--- Other LSP servers
-local lsp_servers = { "clangd", "biome", "pyright" }
-for _, server in ipairs(lsp_servers) do
-    vim.lsp.config(server, {
-        capabilities = capabilities,
-        on_attach = setup_lsp_keymaps,
-    })
-end
+-- Individual server configurations
+vim.lsp.config('lua_ls', {
+  cmd = { 'lua-language-server' },
+  settings = {
+    Lua = {
+      runtime = { version = 'LuaJIT' },
+      diagnostics = { globals = { 'vim' } },
+      workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+      telemetry = { enable = false },
+    },
+  },
+})
+
+vim.lsp.config('pyright', {
+  cmd = { 'pyright-langserver', '--stdio' },
+  root_markers = { 'pyproject.toml', 'requirements.txt', '.git' },
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = 'basic',
+        autoImportCompletions = true,
+      },
+    },
+  },
+})
+
+vim.lsp.config('clangd', {
+  cmd = { 'clangd', '--background-index' },
+  root_markers = { '.git', 'compile_commands.json' },
+})
+
+-- Enable servers
+vim.lsp.enable({ 'lua_ls', 'pyright', 'clangd' })
+
+
 
 -- LSP Diagnostics configuration
 vim.diagnostic.config({
