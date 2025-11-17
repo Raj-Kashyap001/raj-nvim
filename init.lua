@@ -431,15 +431,6 @@ require('nvim-treesitter.configs').setup({
         disable = { "yaml" }
     },
 
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "gnn",
-            node_incremental = "grn",
-            scope_incremental = "gsc",
-            node_decremental = "grm",
-        },
-    },
 })
 
 -- ============================================================================
@@ -638,7 +629,7 @@ require("catppuccin").setup({
 })
 
 vim.cmd('colorscheme catppuccin-mocha')
-vim.cmd('colorscheme everforest')
+-- vim.cmd('colorscheme everforest')
 
 -- ============================================================================
 -- ADDITIONAL OPTIMIZATIONS
